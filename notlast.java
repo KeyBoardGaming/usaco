@@ -27,10 +27,34 @@ public class notlast {
 			System.out.println(cowNames[c] + ": " + milkValues[c]);
 		}
 		*/
+		int[] originalMilkValues = new int[7];
+		for(int c = 0; c < milkValues.length; c++) {
+			originalMilkValues[c] = milkValues[c];
+		}
 		Arrays.sort(milkValues);		
+		
+		boolean[] isNumberConnected = new boolean[7];
+		boolean[] isCowConnected = new boolean[7];
+		String[] rearrangedCowNames = new String[7];
+		for(int c= 0; c < 7; c++) {
+			int numToCheck = originalMilkValues[c];
+			String cowToCheck = cowNames[c];
+			for(int i = 0; i < 7; i++) {
+				if((milkValues[i] == numToCheck) && (!isNumberConnected[i])) {
+					isNumberConnected[i] = true;
+					rearrangedCowNames[i] = cowToCheck;
+				}
+			}
+		}
+		for(int c = 0; c < 7; c++) {
+			System.out.println(rearrangedCowNames[c] + ": " + milkValues[c]);
+		}
+		
 		
 		out.close();
 	}
+	
+
 	public static int positionOf(String str, String[] cowNames) {
 		int returnval = 0;
 		
