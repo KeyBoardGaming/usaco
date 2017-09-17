@@ -62,7 +62,7 @@ public class notlast {
 		
 		
 		//find the smallest value
-		int smallest = 101;
+		int smallest = 10001; //101
 		for(int c = 0; c < 7; c++) {
 			//System.out.println(milkValues[c]);
 			if(milkValues[c] < smallest) {
@@ -73,19 +73,24 @@ public class notlast {
 		//System.out.println(smallest);
 		//System.out.println(smallest);
 		//Find the second smallest value
-		int secondSmallest = 101;
+		int secondSmallestIndex = 0;
+		int secondSmallest = 10001; //101
 		for(int c = 0; c < 7; c++) {
 			if((milkValues[c] > smallest) && (milkValues[c] < secondSmallest)) {
 				secondSmallest = milkValues[c];
+				secondSmallestIndex = c;
 			}
 		}
+		//System.out.println(smallest);
+		//System.out.println(secondSmallest);
 		//System.out.println(secondSmallest);
 		
 		if(asInArr(secondSmallest, milkValues) > 1) {
-			out.println("TIE");
+			out.println("Tie");
 		} else {
-			out.println(cowNames[positionOf(secondSmallest, milkValues)]);
+			out.println(cowNames[secondSmallestIndex]);
 		}
+		
 		
 		
 		
