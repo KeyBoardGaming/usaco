@@ -10,33 +10,67 @@ import java.util.StringTokenizer;
 public class notlast {
 	public static void main(String[] args) throws IOException {
 		int[] milkValues= new int[7];
-		String[] cowNames = {"Bessie", "Maggie", "Elsie", "Henrietta", "Gertie", "Daisy", "Annabele"};
+		String[] cowNames = {"Bessie", "Maggie", "Elsie", "Henrietta", "Gertie", "Daisy", "Annabelle"};
 		BufferedReader f = new BufferedReader(new FileReader("notlast.in"));
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("notlast.out")));
 		//Gather inputs
 		int linesOfInput = Integer.parseInt(f.readLine());
 		
-		for(int c = 0; c < linesOfInput; c++) {
+		/*for(int c = 0; c < linesOfInput; c++) {
 			StringTokenizer st = new StringTokenizer(f.readLine());
 			String cowName = st.nextToken();
 			int addMilk = Integer.parseInt(st.nextToken());
 			milkValues[positionOf(cowName, cowNames)]+=addMilk;
 		}
+		*/
+		/*
+		for(int c = 0; c < linesOfInput; c++) {
+			StringTokenizer st = new StringTokenizer(f.readLine());
+			String currCowName = st.nextToken();
+			int currCowMilkVal = Integer.parseInt(st.nextToken());
+			System.out.println("I: " + currCowMilkVal);
+			if(!(isStrInArr(currCowName, cowNames))) {
+				cowNames[nextEmptyElement(cowNames)] = currCowName;
+				milkValues[nextEmptyElement(cowNames)] +=currCowMilkVal;
+			}
+			else {
+				milkValues[positionOf(currCowName,cowNames)]+=currCowMilkVal;
+			}
+			
+		}*/
+		
+		// Reads lines of input
+		for(int c = 0; c < linesOfInput; c++) {
+			StringTokenizer st = new StringTokenizer(f.readLine());
+			String cowName = st.nextToken();
+			int milkAmount = Integer.parseInt(st.nextToken());
+			
+			milkValues[positionOf(cowName, cowNames)]+=milkAmount;
+		}
+		/*for(int c = 0; c < 7; c++) {
+			System.out.println("Y" + milkValues[c]);
+		}
+		*/
 		f.close();
+		
 		int[] originalMilkValues = new int[7];
 		for(int c = 0; c < milkValues.length; c++) {
 			originalMilkValues[c] = milkValues[c];
 		}
-		Arrays.sort(milkValues);	
+		
+		//Arrays.sort(milkValues);	
 		
 		
 		//find the smallest value
 		int smallest = 101;
 		for(int c = 0; c < 7; c++) {
+			//System.out.println(milkValues[c]);
 			if(milkValues[c] < smallest) {
+				
 				smallest = milkValues[c];
 			}
 		}
+		//System.out.println(smallest);
 		//System.out.println(smallest);
 		//Find the second smallest value
 		int secondSmallest = 101;
@@ -52,6 +86,9 @@ public class notlast {
 		} else {
 			out.println(cowNames[positionOf(secondSmallest, milkValues)]);
 		}
+		
+		
+		
 		out.close();
 	}
 	
