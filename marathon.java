@@ -79,7 +79,7 @@ public class marathon {
 			totalDistances[nextEmpty(totalDistances)] = currDistance;
 		}
 		System.out.println();
-		System.out.println(theGreatest(totalDistances));
+		System.out.println(theLeast(totalDistances));
 		
 	}
 	public static void printMatrix(int[][] matrix) {
@@ -98,6 +98,17 @@ public class marathon {
 			}
 		}
 		return greatest;
+	}
+	public static int theLeast(int[] arr) {
+		int least = theGreatest(arr);
+		
+		for(int c = 0; c < arr.length; c++) {
+			if(arr[c] < least) {
+				least = arr[c];
+			}
+		}
+		
+		return least;
 	}
 	public static void printArr(int[] arr) {
 		for(int c = 0; c < arr.length; c++) {
