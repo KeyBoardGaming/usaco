@@ -15,9 +15,9 @@ public class marathon {
 			xs[c] = Integer.parseInt(st.nextToken());
 			ys[c] = Integer.parseInt(st.nextToken());
 		}
-		int newDistance = 0;
-		int[][] removedXs = new int[linesOfInput-1][linesOfInput]; 
-		int[][] removedYs = new int[linesOfInput-1][linesOfInput];
+	//	int newDistance = 0;
+		int[][] removedXs = new int[linesOfInput-1][linesOfInput-2]; 
+		int[][] removedYs = new int[linesOfInput-1][linesOfInput-2];
 		/*
 		for(int removedElement = 0; removedElement < linesOfInput; removedElement++) {
 			int[] newxs = new int[linesOfInput];
@@ -36,11 +36,13 @@ public class marathon {
 		}
 		System.out.println(theGreatest(totalDistances));
 		*/
+		
 		int row = 0;
-		for(int fe = 0; fe < linesOfInput; fe++) {
-			for(int c = 0; c < linesOfInput; c++) {
-				if(c != fe) {
-					removedXs[row][fe] = xs[c];
+		for(int paths = 0; paths < removedXs.length; paths++) {
+			
+			for(int checkpoint = 0; checkpoint < linesOfInput-1; checkpoint++) {
+				if(checkpoint != ignoreCheckpoint) {
+					removedXs[row][re] = xs[c];
 					row++;
 				}
 			}
@@ -49,7 +51,7 @@ public class marathon {
 		printMatrix(removedXs);
 		row = 0;
 		for(int fe = 0; fe < linesOfInput; fe++) {
-			for(int c = 0; c < linesOfInput; c++) {
+			for(int c = 0; c < linesOfInput-1; c++) {
 				if(c != fe) {
 					removedYs[row][fe] = ys[c];
 					row++;
@@ -59,18 +61,7 @@ public class marathon {
 		}
 		System.out.println();
 		printMatrix(removedYs);
-		/*
-		for(int y = 0; y< linesOfInput-1; y++) { //Start Paste on THIS LINE
-			for(int x = 0; x < linesOfInput-1; x++) {
-				int currDistance = 0;
-				for(int c = 0; c < linesOfInput; c++) {
-					currDistance += distance(removedXs[y][x],removedYs[y][x],removedXs[y+1][x], removedYs[y+1][x]);
-				}
-				totalDistances[nextEmpty(totalDistances)] = currDistance;
-			}
-		} //End Paste on THIS LINE
-		*/
-		//System.out.println(theGreatest(totalDistances));
+		
 		for(int c = 0; c < linesOfInput; c++) {
 			int currDistance = 0;
 			for(int i = 0; i < linesOfInput-2; i++) {
