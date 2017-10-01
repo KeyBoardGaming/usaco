@@ -15,6 +15,10 @@ public class marathon {
 			xs[c] = Integer.parseInt(st.nextToken());
 			ys[c] = Integer.parseInt(st.nextToken());
 		}
+		int newDistance = 0;
+		int[][] removedXs = new int[linesOfInput-1][linesOfInput]; 
+		int[][] removedYs = new int[linesOfInput-1][linesOfInput];
+		/*
 		for(int removedElement = 0; removedElement < linesOfInput; removedElement++) {
 			int[] newxs = new int[linesOfInput];
 			int[] newys = new int[linesOfInput];
@@ -24,13 +28,67 @@ public class marathon {
 			}
 			newxs[removedElement] = 0;
 			newys[removedElement] = 0;
-			int newDistance = 0;
+			
 			for(int c = 0; c < linesOfInput-1; c++) {
 				newDistance+= distance(newxs[c], newys[c], newxs[c+1], newys[c+1]);
 			}
 			totalDistances[nextEmpty(totalDistances)] = newDistance;
 		}
 		System.out.println(theGreatest(totalDistances));
+		*/
+		int row = 0;
+		for(int fe = 0; fe < linesOfInput; fe++) {
+			for(int c = 0; c < linesOfInput; c++) {
+				if(c != fe) {
+					removedXs[row][fe] = xs[c];
+					row++;
+				}
+			}
+			row = 0;
+		}
+		printMatrix(removedXs);
+		row = 0;
+		for(int fe = 0; fe < linesOfInput; fe++) {
+			for(int c = 0; c < linesOfInput; c++) {
+				if(c != fe) {
+					removedYs[row][fe] = ys[c];
+					row++;
+				}
+			}
+			row = 0;
+		}
+		System.out.println();
+		printMatrix(removedYs);
+		/*
+		for(int y = 0; y< linesOfInput-1; y++) { //Start Paste on THIS LINE
+			for(int x = 0; x < linesOfInput-1; x++) {
+				int currDistance = 0;
+				for(int c = 0; c < linesOfInput; c++) {
+					currDistance += distance(removedXs[y][x],removedYs[y][x],removedXs[y+1][x], removedYs[y+1][x]);
+				}
+				totalDistances[nextEmpty(totalDistances)] = currDistance;
+			}
+		} //End Paste on THIS LINE
+		*/
+		//System.out.println(theGreatest(totalDistances));
+		for(int c = 0; c < linesOfInput; c++) {
+			int currDistance = 0;
+			for(int i = 0; i < linesOfInput-2; i++) {
+				currDistance+=distance(removedXs[i][c], removedYs[i][c], removedXs[i+1][c], removedYs[i+1][c]);
+			}
+			totalDistances[nextEmpty(totalDistances)] = currDistance;
+		}
+		System.out.println();
+		System.out.println(theGreatest(totalDistances));
+		
+	}
+	public static void printMatrix(int[][] matrix) {
+		for(int c = 0; c < matrix.length; c++) {
+			for(int f = 0; f < matrix[0].length; f++) {
+				System.out.print(matrix[c][f] + " ");
+			}
+			System.out.println();
+		}
 	}
 	public static int theGreatest(int[] arr) {
 		int greatest = arr[0];
@@ -40,6 +98,12 @@ public class marathon {
 			}
 		}
 		return greatest;
+	}
+	public static void printArr(int[] arr) {
+		for(int c = 0; c < arr.length; c++) {
+			System.out.print(arr[c] + " ");
+		}
+		System.out.println();
 	}
 	public static int nextEmpty(int[] arr) {
 		int returnval = 0;
