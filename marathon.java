@@ -1,78 +1,81 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
 public class marathon {
 	public static void main(String[] args) throws IOException {
 		BufferedReader f = new BufferedReader(new FileReader("marathon.in"));
 		int linesOfInput = Integer.parseInt(f.readLine());
-		int[] totalDistances = new int[linesOfInput];
-		int[] xs = new int[linesOfInput];
-		int[] ys = new int[linesOfInput];
+		//int[] totalDistances = new int[linesOfInput];
+		Checkpoint[] checkpoints  = new Checkpoint[linesOfInput];
 		for(int c = 0; c < linesOfInput; c++) {
-			StringTokenizer st = new StringTokenizer(f.readLine());
-			xs[c] = Integer.parseInt(st.nextToken());
-			ys[c] = Integer.parseInt(st.nextToken());
+			String newLine = f.readLine();
+			StringTokenizer st = new StringTokenizer(newLine);
+			checkpoints[c] = new Checkpoint();
+			checkpoints[c].x = Integer.parseInt(st.nextToken());
+			checkpoints[c].y = Integer.parseInt(st.nextToken());
 		}
-	//	int newDistance = 0;
-		int[][] removedXs = new int[linesOfInput-1][linesOfInput-2]; 
-		int[][] removedYs = new int[linesOfInput-1][linesOfInput-2];
 		/*
-		for(int removedElement = 0; removedElement < linesOfInput; removedElement++) {
-			int[] newxs = new int[linesOfInput];
-			int[] newys = new int[linesOfInput];
-			for(int c = 0; c < linesOfInput; c++) {
-				newxs[c] = xs[c];
-				newys[c] = ys[c];
-			}
-			newxs[removedElement] = 0;
-			newys[removedElement] = 0;
-			
-			for(int c = 0; c < linesOfInput-1; c++) {
-				newDistance+= distance(newxs[c], newys[c], newxs[c+1], newys[c+1]);
-			}
-			totalDistances[nextEmpty(totalDistances)] = newDistance;
+		for(int c=0;c< linesOfInput ;c++) {
+			checkpoints[c].printPair();
 		}
-		System.out.println(theGreatest(totalDistances));
 		*/
-		
 		int row = 0;
-		for(int paths = 0; paths < removedXs.length; paths++) {
-			
-			for(int checkpoint = 0; checkpoint < linesOfInput-1; checkpoint++) {
-				if(checkpoint != ignoreCheckpoint) {
-					removedXs[row][re] = xs[c];
+		Checkpoint[][] paths = new Checkpoint[linesOfInput-1][linesOfInput-2];
+		for(int c = 0; c < linesOfInput-1; c++) {
+			for(int i = 0; i < linesOfInput-2; i++) {
+				paths[c][i] = new Checkpoint();
+			}
+		}
+		int ignorePos = 1;
+		for(int path  = 0; path < paths[0].length; path++) {
+			for(int checkpoint = 0; checkpoint < checkpoints.length; checkpoint++) {
+				if(checkpoint !=ignorePos) {
+					paths[row][path] = checkpoints[checkpoint];
 					row++;
 				}
 			}
 			row = 0;
+			ignorePos++;
 		}
-		printMatrix(removedXs);
-		row = 0;
-		for(int fe = 0; fe < linesOfInput; fe++) {
-			for(int c = 0; c < linesOfInput-1; c++) {
-				if(c != fe) {
-					removedYs[row][fe] = ys[c];
-					row++;
-				}
+		/*
+		for(int c = 0; c < linesOfInput-2; c++ ) {
+			for(int i = 0; i < linesOfInput-1; i++) {
+				paths[i][c].printPair();
 			}
-			row = 0;
 		}
-		System.out.println();
-		printMatrix(removedYs);
-		
-		for(int c = 0; c < linesOfInput; c++) {
+		*/
+		int[] distances = new int[linesOfInput-2];
+		for(int c = 0; c < distances.length; c++) {
 			int currDistance = 0;
 			for(int i = 0; i < linesOfInput-2; i++) {
-				currDistance+=distance(removedXs[i][c], removedYs[i][c], removedXs[i+1][c], removedYs[i+1][c]);
+				currDistance+=distance(paths[i][c].x,paths[i][c].y,paths[i+1][c].x,paths[i+1][c].y);
 			}
-			totalDistances[nextEmpty(totalDistances)] = currDistance;
+			distances[c] = currDistance;
 		}
-		System.out.println();
-		System.out.println(theLeast(totalDistances));
+		//System.out.println();
+		f.close();
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("marathon.out")));
+		out.println(theLeast(distances));
+		out.close();
+		//printMatrix(paths);
+		
+		
 		
 	}
+	public static void printMatrix(Checkpoint[][] matrix) {
+		for(int c = 0; c < matrix.length; c++) {
+			for(int f = 0; f < matrix[0].length; f++) {
+				matrix[c][f].printPair();
+			}
+			System.out.println();
+		}
+	}
+	/*
 	public static void printMatrix(int[][] matrix) {
 		for(int c = 0; c < matrix.length; c++) {
 			for(int f = 0; f < matrix[0].length; f++) {
@@ -81,6 +84,7 @@ public class marathon {
 			System.out.println();
 		}
 	}
+	*/
 	public static int theGreatest(int[] arr) {
 		int greatest = arr[0];
 		for(int c = 0; c < arr.length; c++) {
@@ -125,3 +129,17 @@ public class marathon {
 		return distance;
 	}
 }
+class Checkpoint {
+	int x;
+	int y;
+
+	public void printX() {
+		System.out.println(x);
+	}
+	public void printY() {
+		System.out.println(y);
+	}
+	public void printPair() {
+		System.out.println(x + " " + y);
+	}
+} //Checkpoint
