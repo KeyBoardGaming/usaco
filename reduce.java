@@ -14,28 +14,23 @@ public class reduce {
 		int ymax = 0;
 		int xmin = Integer.MAX_VALUE;
 		int xmax = 0;
-		
-		int[] xs = new int[points];
-		int[] ys = new int[points];
-		//Fill Xs and Ys Array
-		for(int c = 0; c < points; c++) {
-			String newLine = f.readLine();
-			StringTokenizer st = new StringTokenizer(newLine);
-			xs[c] = Integer.parseInt(st.nextToken());
-			ys[c] = Integer.parseInt(st.nextToken());
-		}
 		int indexOfMinX = 0;
 		int indexOfMaxX = 0;
 		int indexOfMinY = 0;
 		int indexOfMaxY = 0;
 		
-		//Get biggest and smallest x and y values
+		int[] xs = new int[points];
+		int[] ys = new int[points];
+		//Fill Xs and Ys Array and get biggest and largest values
 		for(int c = 0; c < points; c++) {
+			String newLine = f.readLine();
+			StringTokenizer st = new StringTokenizer(newLine);
+			xs[c] = Integer.parseInt(st.nextToken());
+			ys[c] = Integer.parseInt(st.nextToken());
 			if(xs[c] > xmax) {
 				xmax = xs[c];
 				indexOfMaxX = c;
 			}
-			
 			if(xs[c] < xmin) {
 				xmin = xs[c];
 				indexOfMinX = c;
@@ -49,17 +44,14 @@ public class reduce {
 				indexOfMinY = c;
 			}
 		}
-		//Make an int[] of xs without the minimum x
+		
+		
+		//Make an int[] of xs and ys without the minimum x and y
 		int[] minminxs = new int[points-1];
+		int[] minminys = new int[points-1];
 		for(int c = 0; c < points; c++) {
 			if(c != indexOfMinX) {
 				minminxs[closestEmpty(minminxs)] = xs[c];
-			}
-		}
-		//Make an int[] of ys without the minimum y
-		int[] minminys = new int[points-1];
-		for(int c = 0; c < points; c++) {
-			if(c != indexOfMinY) {
 				minminys[closestEmpty(minminys)] = ys[c];
 			}
 		}
@@ -68,22 +60,31 @@ public class reduce {
 		int minminArea = (Math.abs(minArr(minminys)-maxArr(minminys))) * (Math.abs(minArr(minminxs)-maxArr(minminxs)));
 		//System.out.println(minminArea);
 		
-		//Make an int[] of xs without the maximum x
+		//Make an int[] of xs and ys without the maximum x and y
 		int[] minmaxxs = new int[points-1];
+		int[] minmaxys = new int[points-1];
 		for(int c = 0; c < points; c++) {
 			if(c != indexOfMaxX) {
 				minmaxxs[closestEmpty(minmaxxs)] = xs[c];
-			}
-		}
-		//Make an int[] of ys without the maximum y
-		int[] minmaxys = new int[points-1];
-		for(int c = 0; c < points; c++) {
-			if(c != indexOfMaxY) {
 				minmaxys[closestEmpty(minmaxys)] = ys[c];
 			}
 		}
 		//Get area of that
 		int minmaxArea = (Math.abs(minArr(minmaxys)-maxArr(minmaxys))) * (Math.abs(minArr(minmaxxs)-maxArr(minmaxxs)));
+		
+		
+		if(Math.min(minminArea, minmaxArea) == minminArea) {
+			System.out.println("minminArea");
+		} else {
+			System.out.println("minmaxArea");
+		}
+		
+		
+		
+		
+		
+		
+		
 		
 		//output smallest area
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("reduce.out")));
