@@ -10,10 +10,17 @@ public class reduce {
 	public static void main(String[] args) throws IOException{
 		BufferedReader f = new BufferedReader(new FileReader("reduce.in"));
 		int points = Integer.parseInt(f.readLine());
+		
+		//Make variables of smallest, biggest, second-smallest, and second-biggest values for y and x values
 		int ymin = Integer.MAX_VALUE;
+		int yamin = Integer.MAX_VALUE;
 		int ymax = 0;
+		int yamax = 0;
 		int xmin = Integer.MAX_VALUE;
+		int xamin = Integer.MAX_VALUE;
 		int xmax = 0;
+		int xamax = 0;
+		
 		int indexOfMinX = 0;
 		int indexOfMaxX = 0;
 		int indexOfMinY = 0;
@@ -30,7 +37,7 @@ public class reduce {
 			if(xs[c] > xmax) {
 				xmax = xs[c];
 				indexOfMaxX = c;
-			}
+			} 
 			if(xs[c] < xmin) {
 				xmin = xs[c];
 				indexOfMinX = c;
@@ -44,6 +51,12 @@ public class reduce {
 				indexOfMinY = c;
 			}
 		}
+		for(int c = 0; c < points; c++) {
+			if(xs[c] == 2 && ys[c] == 1) {
+				System.out.println(true);
+			}
+		}
+		System.out.println(xmin + " " + ymin);
 		
 		
 		//Make an int[] of xs and ys without the minimum x and y
