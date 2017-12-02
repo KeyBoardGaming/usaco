@@ -19,21 +19,14 @@ public class ctiming {
 		int endHour = Integer.parseInt(st.nextToken());
 		int endMin = Integer.parseInt(st.nextToken());
 		int output = 0;
-		
-		while(currDay != endDay) {
-			output +=1440; //1440 = # of mins in a day
-			currDay++;
-		}
-		while(currHour != endHour) {
-			output+=60; //60 = # of mins in an hour
-			currHour++;
-		}
-		while(currMin !=endMin) {
-			output+=1; //incrementing the minute
-			currMin++;
-		}
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("ctiming.out")));
-		out.println(output);
+		
+		
+		if((endDay < currDay) || (endHour < currHour && endDay == currDay) || (endMin < currMin && endHour == currHour && endDay == currDay)) {
+			out.println("-1");
+		} else {
+			out.println(((endDay - currDay)*1440) + ((endHour - currHour)*60) +((endMin - currMin)));
+		}
 		out.close();
 	}
 }
