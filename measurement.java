@@ -15,6 +15,8 @@ public class measurement {
 		
 		//INCLUDE DAYS!!!!!!!!!!
 		
+		///Including the days 
+		
 		
 		
 		for(int z = 0; z < linesOfInput; z++) {
@@ -25,7 +27,7 @@ public class measurement {
 			System.out.println(currCow);
 			
 			String value = st.nextToken();
-			updateBEM(currCow, value); //Increses or decreases the total amount of each cow's milk.
+			updateBEM(currCow, value); //Increases or decreases the total amount of each cow's milk.
 			
 			int maxMilkVal = Math.max(BEM[0], BEM[1]);
 			maxMilkVal = Math.max(maxMilkVal, BEM[2]); //Finds the greatest amount of milk produced.
